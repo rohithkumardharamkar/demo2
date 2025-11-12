@@ -6,7 +6,7 @@
     },
     {
       "route": "/*",
-      "allowedRoles": ["authenticated"]
+      "allowedRoles": ["anonymous", "authenticated"]
     }
   ],
   "auth": {
@@ -25,4 +25,3 @@
     "Content-Security-Policy": "default-src 'self'; frame-ancestors 'none';"
   }
 }
-
