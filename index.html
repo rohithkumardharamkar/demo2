@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Company Portal</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Company Portal</title>
 </head>
 <body>
-  <h1>Welcome to My Company Portal</h1>
-
+<h1>Welcome to My Company Portal</h1>
+ 
   <p id="status">Checking login...</p>
-
+ 
   <p>
-    <a href="/.auth/login/aad">Sign In</a> |
-    <a href="/.auth/logout">Sign Out</a>
-  </p>
-
+<a href="/.auth/login/aad">Sign In</a> |
+<a href="/.auth/logout?post_logout_redirect_uri=/">Sign Out</a>
+</p>
+ 
   <p>
-    <a href="/admin.html">Admin Area</a>
-  </p>
-
+<a href="/admin.html">Admin Area</a>
+</p>
+ 
   <script>
-    fetch("/.auth/me")
-      .then(res => res.json())
-      .then(data => {
-        if (data && data[0]) {
-          const user = data[0];
+    async function checkLogin() {
+      try {
+        const res = await fetch("/.auth/me");
+        const data = await res.json();
+        const user = data.clientPrincipal;
+ 
+        if (user) {
           document.getElementById("status").textContent =
             `Signed in as ${user.userDetails}`;
-
-          // Display assigned roles if available
-          if (user.userRoles) {
+ 
+          if (user.userRoles && user.userRoles.length > 0) {
             const roles = user.userRoles.join(", ");
             const el = document.createElement("p");
             el.textContent = "Your roles: " + roles;
@@ -36,10 +39,12 @@
         } else {
           document.getElementById("status").textContent = "Not signed in";
         }
-      })
-      .catch(() => {
+      } catch (err) {
         document.getElementById("status").textContent = "Not signed in";
-      });
-  </script>
+      }
+    }
+ 
+    checkLogin();
+</script>
 </body>
 </html>
