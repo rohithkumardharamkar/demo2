@@ -1,13 +1,10 @@
 {
   "routes": [
-    {
-      "route": "/admin.html",
-      "allowedRoles": ["admin"]
-    },
-    {
-      "route": "/*",
-      "allowedRoles": ["anonymous", "authenticated"]
-    }
+    { "route": "/admin.html", "allowedRoles": ["admin"] },
+    { "route": "/dashboard.html", "allowedRoles": ["authenticated"] },
+    { "route": "/login.html", "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/postlogin.html", "allowedRoles": ["anonymous", "authenticated"] },
+    { "route": "/*", "allowedRoles": ["anonymous", "authenticated"] }
   ],
   "auth": {
     "identityProviders": {

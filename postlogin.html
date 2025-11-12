@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting...</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>Welcome Back</h1>
+      <p id="status">Checking your access...</p>
+    </div>
+  </div>
+
+  <script>
+    async function handleRedirect() {
+      const res = await fetch("/.auth/me", { cache: "no-store" });
+      const data = await res.json();
+      const user = data.clientPrincipal;
+      const status = document.getElementById("status");
+
+      if (!user) {
+        status.textContent = "No active session found — redirecting to login...";
+        setTimeout(() => (window.location.href = "/login.html"), 1500);
+        return;
+      }
+
+      const roles = user.userRoles || [];
+      if (roles.includes("admin")) {
+        status.textContent = "Welcome, admin! Redirecting to admin dashboard...";
+        setTimeout(() => (window.location.href = "/admin.html"), 1000);
+      } else {
+        status.textContent = "Redirecting to your dashboard...";
+        setTimeout(() => (window.location.href = "/dashboard.html"), 1000);
+      }
+    }
+
+    handleRedirect();
+  </script>
+</body>
+</html>
