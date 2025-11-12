@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "route": "/admin.html",
+      "allowedRoles": ["admin"]
+    },
+    {
+      "route": "/*",
+      "allowedRoles": ["authenticated"]
+    }
+  ],
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/b90ad6a4-b38f-48d7-8c69-bc9d5518fa26/v2.0"
+        }
+      }
+    }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": "default-src 'self'; frame-ancestors 'none';"
+  }
+}
+
